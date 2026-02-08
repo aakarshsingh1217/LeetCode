@@ -1,0 +1,81 @@
+*****************
+Approach 1: Array
+*****************
+
+---------
+Intuition
+---------
+
+- Intuitive data struct. that meets all reqs. would be ring where
+head and tail are adj. to each other.
+
+- Doesn't exist a ring DS in any lang.
+- Similar DS at our disposal is array which is collect. of elems.
+that reside continously in 1D space.
+
+- Essence of design probs., is how one can build more advanced
+DS w/ basic build. blocks such as arr.
+  - To build a circular queue, we'd form a virtual ring struct.
+  with arr., via manip. of index.
+
+- Given a fixed size arr., any elems. could be considered as
+head in a queue.
+- As long as we know len. of queue, we then can instantly
+locate its tail based on following formula:
+  - tailIndex = (headIndex + count - 1) mod capacity,
+- , where var. capacity is size of arr., count is curr. len.
+of queue and headIndex and tailIndex are indices of head and
+tail elems. respectively in arr.
+- Here's a few e.g's how a circular queue could reside in a
+fix sized arr:
+  - Array capacity = 5
+    Queue size = 3
+
+    Head       Tail
+      x    x    x
+      0    1    2    3    4
+
+         Head       Tail
+           x    x    x
+      0    1    2    3    4
+
+     Tail          Head    
+      x              x    x
+      0    1    2    3    4
+  - Intuition:
+    - Start at head, walk forward count - 1 steps, and wrap
+    around if needed.
+    - Modulo is what turns a normal arr. into a circular arr.
+  - One line mental model:
+    - tail = head + (queue length - 1), wrapped inside arr.
+
+---------
+Algorithm
+---------
+
+- Proced. to design a DS lies essentially on how we design
+attribs. within the DS.
+
+- Traits of a good design is to have as less attribs. as possib.,
+which brings some benefits:
+  - Less attribs. implies little/no redundancy among attribs.
+  - Less redundant attribs. are, simpler manip. logic, which
+  eventually could be less error prone.
+  - Less attribs. also req. less space and therefore could
+  also bring efficiency to runtime perf.
+
+- Not advisable to seek for min. set attribs.
+- Sometimes, bit of redundancy helps w/ time compl., need to
+strike balance b/w space and time.
+
+- Following abv. princip., here's a list of attribs.:
+  - queue: a fixed size arr. to hold elems. for circular queue.
+  - headIndex: int. which indicates curr. head elem. in circular
+  queue.
+  - count: curr. len. of circular queue, i.e. num. elems. in
+  circular queue, togeth. with headIndex, could locate curr.
+  tail elem. in circular queue, based on formula, therefore
+  don't need another attrib. for tail index.
+  - capacity: max. num elems. holdable in queue, freq. used
+  in alg. to find tail, instead of invoking len(queue) every
+  time.
