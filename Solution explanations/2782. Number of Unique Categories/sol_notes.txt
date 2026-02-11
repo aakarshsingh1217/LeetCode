@@ -1,0 +1,12 @@
+************************************
+Approach 1: Depth-First Search (DFS)
+************************************
+
+- There're N elems., each associated with a category repr.
+by a num. from 0 to n - 1.
+- Don't know category of each elem.
+- We can find if two elems. have same category or not using
+func. call haveSameCategory(i, j), where two int. args. are
+the elems.
+- This func. returns true if they've the same categ. and false
+otherwise

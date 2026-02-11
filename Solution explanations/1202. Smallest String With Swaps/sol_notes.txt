@@ -1,0 +1,68 @@
+************************************
+Approach 1: Depth-First Search (DFS)
+************************************
+
+---------
+Intuition
+---------
+
+- Build adj. list using pairs given i.e. for each pair (x, y) add edge from
+x to y and from y to x.
+- Iter. over indices from 0 to n - 1 where n len. of given string s.
+- For each index, if it hasn't been visited yet, perform a DFS and store
+vertices (index) and chars. at these indices in a list.
+- Each list repr. different component in graph.
+- Then we sort each list of indices and each list of chars. and place
+ith char. at ith index in str. smallestStr.
+
+---------
+Algorithm
+---------
+
+1. Iterate over pairs and create an adj. list such that adj[source] contains
+all vertices of vertex source.
+2. Iterate over indices from - to s.size() - 1. For each index we'll:
+  - Perform DFS if vertex not visited yet (visited[vertex] false).
+    - While performing DFS, store vertex in list indices and char.
+    s[vertex] in list chars.
+  - Sort indices and chars.
+  - Iterate over indices and chars., and place ith char. and ith index in
+  str. smallestStr.
+3. Return smallestStr.
+
+- Extra explanation:
+  - If two indices are connected (directly or indirectly) by swaps,
+  then chars. at those indices can be rearranged arbitrarily.
+  - Means each connected component of indices is independent.
+  - Inside a component:
+    - You can permute chars. however you want.
+    - So to get lexicographically smallest str:
+      - Put smallest chars. into smallest indices.
+  - Why DFS?:
+    - Swaps form a graph:
+      - Indices = nodes, pairs = undir. edges.
+    - E.g.:
+      - pairs = [[0,3],[1,2],[0,2]]
+        
+        Graph:
+        0 --- 3
+        |     
+        2 --- 1
+      - All indices {0, 1, 2, 3} connected -> one component.
+    - DFS used to:
+      - Discover all indices reachable from a start index.
+      - I.e. find a connected component.
+  - What DFS is collecting:
+    - Inside DFS;
+      - indices.append(vertex)
+        characters.append(s[vertex])
+    - So for one connected component, collect:
+      - indices: which pos. connected.
+      - chars.: letters curr. at those pos.
+  - Sorting both arrays works:
+    - Suppose DFS finds: indices = [3, 0, 2], characters = ['b', 'd', 'a'].
+    - Sort both: indices -> [0, 2, 3], characters -> ['a', 'b', 'd']
+    - Then assign: s[0] = 'a'
+                   s[2] = 'b'
+                   s[3] = 'd'.
+    - Smallest index gets smallest char.
